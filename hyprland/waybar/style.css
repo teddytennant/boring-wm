@@ -1,0 +1,65 @@
+/* Boring theme — brutalist: ONE flat color, zero padding, no
+   borders/rounding. The bar sits a touch lighter than the pure-black
+   (#000000) desktop so it reads as a single uniform strip. */
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 12px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+}
+
+window#waybar {
+    background: #1a1a1a;   /* one color, slightly lighter than the desktop */
+    color: #ffffff;
+    border: none;
+    border-radius: 0;
+    /* NB: do NOT set `height` here — GTK4 waybar treats it as an invalid
+       CSS property and exits 1, which crash-loops the service into the
+       systemd start-limit (= no bar in boring mode). The bar thickness is
+       driven by `height` in config.boring (24px); keep min-height 0 so it
+       can't floor the bar taller than that. */
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+}
+
+/* One uniform white foreground on the bar's single #1a1a1a. The shared
+   waybar config sets spacing:0, so give each module a little horizontal
+   padding here — otherwise the modules crowd together and the rightmost
+   one clips off the screen edge. */
+#clock,
+#cpu,
+#memory,
+#network,
+#bluetooth,
+#pulseaudio,
+#battery,
+#mpris,
+#custom-dnd,
+#workspaces {
+    background: transparent;
+    color: #ffffff;
+    border: none;
+    padding: 0 8px;
+    margin: 0;
+}
+
+/* Workspaces show as plain numbers in boring (config.boring sets the
+   format to {id}); keep them flat — active is white, the rest dimmed. */
+#workspaces button {
+    color: #888888;
+    background: transparent;
+    padding: 0 6px;
+    margin: 0;
+    min-width: 0;
+}
+#workspaces button.active,
+#workspaces button.focused {
+    color: #ffffff;   /* black & white bar — no colour accent here */
+}
+#workspaces button:hover {
+    color: #ffffff;
+}
